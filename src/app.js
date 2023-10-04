@@ -1,3 +1,26 @@
+function formatDate(timestamp) {
+  let date = new Date(timestamp);
+  let hours = date.getHours();
+  let minutes = date.getMinutes();
+  if (minutes < 10) {
+    minutes = `o${minutes}`;
+  }
+  if (hours < 10) {
+    hours = `o${hours}`;
+  }
+  let days = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+  let day = days[date.getDay()];
+  return `${day} ${hours}:${minutes} `;
+}
+
 function displayTemperature(response) {
   console.log(response.data);
   document.querySelector("#temperature").innerHTML = Math.round(
@@ -10,6 +33,9 @@ function displayTemperature(response) {
     response.data.temperature.humidity;
   document.querySelector("#wind").innerHTML = Math.round(
     response.data.wind.speed
+  );
+  document.querySelector("#date").innerHTML = formatDate(
+    response.data.time * 1000
   );
 }
 
