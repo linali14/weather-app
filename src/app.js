@@ -1,13 +1,14 @@
 function formatDate(timestamp) {
   let date = new Date(timestamp);
   let hours = date.getHours();
+  if (hours < 10) {
+    hours = `o${hours}`;
+  }
   let minutes = date.getMinutes();
   if (minutes < 10) {
     minutes = `o${minutes}`;
   }
-  if (hours < 10) {
-    hours = `o${hours}`;
-  }
+
   let days = [
     "Sunday",
     "Monday",
@@ -22,7 +23,6 @@ function formatDate(timestamp) {
 }
 
 function displayTemperature(response) {
-  console.log(response.data);
   document.querySelector("#temperature").innerHTML = Math.round(
     response.data.temperature.current
   );
@@ -37,9 +37,19 @@ function displayTemperature(response) {
   document.querySelector("#date").innerHTML = formatDate(
     response.data.time * 1000
   );
+  document
+    .querySelector("#icon")
+    .setAttribute(
+      "src",
+      `http://shecodes-assets.s3.amazonaws.com/api/weather/icons/${response.data.condition.icon}.png`
+    );
+  document
+    .querySelector("#icon")
+    .setAttribute("alt", response.data.condition.description);
 }
 
+let city = "New York";
 let apiKey = "0b46at2a4oea675f7c0b2d74a911c630";
-let apiUrl = `https://api.shecodes.io/weather/v1/current?query=New York&key=${apiKey}&units=metric`;
+let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}&units=metric`;
 
 axios.get(apiUrl).then(displayTemperature);
