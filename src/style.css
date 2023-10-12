@@ -20,6 +20,9 @@ h1 {
   line-height: 28px;
   margin-bottom: 0;
 }
+#feels-like {
+  color: rgb(135, 135, 135);
+}
 ul {
   margin: 0;
   padding: 0;
